@@ -5,6 +5,13 @@ function success(data){
         data: data
     }
 }
+function successToken(token){
+    return {
+        code: 200,
+        status: 'Login successful',
+        token: token
+    }
+}
 function badRequest(){
     return {
         code: 400,
@@ -23,4 +30,4 @@ function error(message){
         status: message || 'Error'
     }
 }
-module.exports = {success,badRequest,badAuthentication,error}
+module.exports = {success,badRequest,badAuthentication,error,successToken}

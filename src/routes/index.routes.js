@@ -1,4 +1,7 @@
 const userController = require('../controller/user.controller');
-module.exports = function(app) {
-    app.post('/user',userController.createUser);
-};
+const router = require('express').Router()
+const userRoutes = require('./user.routes')
+const authRoutes = require('./auth.routes')
+router.use('/user',userRoutes)
+router.use('/',authRoutes)
+module.exports = router

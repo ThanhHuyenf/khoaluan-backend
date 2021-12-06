@@ -10,7 +10,6 @@ const port = PORT;
 app.use(express.json());
 sequelize.sync();
 
-app.use(verifyToken)
 app.use('/api',routes)
 app.listen(port, async (request, respond) => {
     console.log(`Server đang chạy ở cổng ${port}.`);
