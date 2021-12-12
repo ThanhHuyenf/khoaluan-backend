@@ -14,7 +14,7 @@ exports.verifyToken = (req, res, next) => {
         next();
     });
 };
-export function permit(...permittedRoles) {
+exports.permit = function (...permittedRoles) {
     return (request, response, next) => {
         const { user } = request
 

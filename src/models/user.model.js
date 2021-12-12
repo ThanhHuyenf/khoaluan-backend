@@ -12,9 +12,6 @@ const User = sequelize.define('user', {
         // Sequelize module has INTEGER Data_Type.
         type:Sequelize.INTEGER,
 
-        // To increment user_id automatically.
-        autoIncrement:true,
-
         // user_id can not be null.
         allowNull:false,
 
@@ -31,9 +28,23 @@ const User = sequelize.define('user', {
     // Column-3, email
     email: { type: Sequelize.STRING, allowNull:false },
 
+    // Column-6 role
+
+    role: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    // Column-5, image profile
+
+    imageUrls: {
+        type: Sequelize.STRING, allowNull:true
+    },
     // Timestamps
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
+}, {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
 })
 
 // Exporting User, using this constant

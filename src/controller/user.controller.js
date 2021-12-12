@@ -6,10 +6,10 @@ const {successToken} = require("../config/response");
 const {SECRET_KEY} = require("../config/secret");
 const {badAuthentication} = require("../config/response");
 
-async function findOne(email) {
+async function findOne(id) {
     return await User.findOne({
         where: {
-            email: email
+            user_id: id
         }
     })
 }
@@ -18,8 +18,10 @@ exports.createUser = (req, res) => {
         return res.status(400).send(badRequest)
     }
     const hashPassword = bcrypt.hashSync(req.body.password, 10)
-    const {name,email} = req.body
+    const {name,email,role,user_id} = req.body
     const user = {
+        user_id: user_id,
+        role: role,
         name: name,
         email: email,
         password: hashPassword
@@ -27,6 +29,7 @@ exports.createUser = (req, res) => {
     User.create(user).then(data => {
         return res.status(200).send(success({message: 'Success create account'}))
     }).catch(err => {
+        console.log(err)
         return res.status(500).send(error(err.message))
     })
 }
@@ -35,7 +38,7 @@ exports.signIn = async (req,res) => {
     if(!req.body){
         return res.status(400).send(badRequest)
     }
-    const findUser = await findOne(req.body.email)
+    const findUser = await findOne(req.body.user_id)
     if(!findUser){
         return res.status(500).send(error('Not found'))
     }
@@ -44,8 +47,8 @@ exports.signIn = async (req,res) => {
     }
     const userData = {
         email: findUser.email,
-        name: findUser.name,
-        id: findUser.id
+        user_id: findUser.user_id,
+        role: findUser.role,
     }
     const token = jwt.sign({userData}, SECRET_KEY ,{expiresIn: '300d'});
     return res.status(200).send(successToken(token))
