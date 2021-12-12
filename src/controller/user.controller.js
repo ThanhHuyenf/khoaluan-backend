@@ -25,7 +25,7 @@ exports.createUser = (req, res) => {
         password: hashPassword
     }
     User.create(user).then(data => {
-        return res.status(200).send(success(data))
+        return res.status(200).send(success({message: 'Success create account'}))
     }).catch(err => {
         return res.status(500).send(error(err.message))
     })
