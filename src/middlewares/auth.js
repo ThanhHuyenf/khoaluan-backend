@@ -6,11 +6,11 @@ exports.verifyToken = (req, res, next) => {
     if (!token) {
         return res.status(403).send({ message: "No token provided!" });
     }
-    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    jwt.verify(token.split(' ')[1], SECRET_KEY, (err, decoded) => {
         if (err) {
             return res.status(401).send(badAuthentication);
         }
-        req.userId = decoded.id;
+        res.locals.userId = decoded.userData.user_id;
         next();
     });
 };

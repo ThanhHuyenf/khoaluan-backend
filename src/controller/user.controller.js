@@ -53,3 +53,41 @@ exports.signIn = async (req,res) => {
     const token = jwt.sign({userData}, SECRET_KEY ,{expiresIn: '300d'});
     return res.status(200).send(successToken(token))
 }
+
+exports.changePassword = async (req,res) => {
+    if(!req.body.oldPassword && !req.body.newPassword){
+        return res.status(400).send(badRequest)
+    }
+    const findUser = await findOne(res.locals.userId)
+    if(!findUser){
+        return res.status(500).send(error('Not found'))
+    }
+    if (!bcrypt.compareSync(req.body.oldPassword, findUser.password)) {
+        return res.status(401).json(badAuthentication('Authentication failed. Wrong password.'));
+    }
+    const hashPassword = await bcrypt.hashSync(req.body.newPassword, 10)
+    const resultUpdate = await User.update({
+        password: hashPassword
+    },{ where: { user_id: res.locals.userId }})
+    return res.status(200).send(success({message: 'Success change password'}))
+}
+
+exports.updateUser = async (req,res) => {
+    const user = req.body
+    const findUser = await findOne(res.locals.userId)
+    if(!findUser){
+        return res.status(500).send(error('Not found'))
+    }
+    const resultUpdate = await User.update(user,{ where: { user_id: res.locals.userId }})
+    return res.status(200).send(success({message: 'Success change userinfo'}))
+}
+
+exports.getUser = async (req,res) => {
+    const findUser = await findOne(res.locals.userId)
+    if(!findUser){
+        return res.status(500).send(error('Not found'))
+    }
+    const user = findUser
+    user.password = undefined
+    return res.status(200).send(success(user))
+}
