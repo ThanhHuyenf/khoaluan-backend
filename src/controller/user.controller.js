@@ -89,5 +89,5 @@ exports.getUser = async (req,res) => {
     }
     const user = findUser
     user.password = undefined
-    return res.status(200).send(success(user))
+    return res.status(200).send(success(user.dataValues))
 }

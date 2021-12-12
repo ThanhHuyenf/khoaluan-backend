@@ -2,7 +2,7 @@ function success(data){
     return {
         code: 200,
         status: 'Success',
-        data: data
+        ...data
     }
 }
 function successToken(token){
