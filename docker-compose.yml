@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  elearning-service:
+  point-training-system:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
     volumes:
       - service:/payment
     depends_on:
-      - mongodb
+      - mysql
     networks:
       - point-training-network
   mysql:
