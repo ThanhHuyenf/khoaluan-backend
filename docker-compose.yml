@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: ${BACK_CONTAINER_NAME}
     ports:
-      - ${PORT}:3001
+      - ${PORT}:3003
     volumes:
       - service:/payment
     depends_on:
