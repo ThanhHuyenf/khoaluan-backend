@@ -10,6 +10,9 @@ export class TimeEntity {
     id: number
 
     @Property()
+    namHoc: string
+
+    @Property()
     maHK: number
 
     @Property()
@@ -29,4 +32,13 @@ export class TimeEntity {
 
     @Property({ onUpdate: () => new Date() })
     updatedAt = new Date();
+
+    constructor(namHoc: string,maHK: number, tgSV: string, tgLT: string,tgGV: string, tgK: string) {
+        this.namHoc = namHoc
+        this.maHK = maHK
+        this.tgSV = tgSV
+        this.tgLT = tgLT
+        this.tgGV = tgGV
+        this.tgK = tgK
+    }
 }
