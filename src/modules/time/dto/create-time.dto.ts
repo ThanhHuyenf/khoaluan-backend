@@ -18,17 +18,17 @@ export class CreateTimeDto {
     @IsString()
     tgSV: string
 
-    @Property()
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     tgLT: string
 
-    @Property()
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     tgGV: string
 
-    @Property()
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     tgK: string

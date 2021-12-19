@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import {IsNotEmpty, IsNumber, IsString} from 'class-validator'
-import {Property} from "@mikro-orm/core";
 
 export class TimeDto {
     @ApiProperty()
@@ -23,17 +22,17 @@ export class TimeDto {
     @IsString()
     tgSV: string
 
-    @Property()
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     tgLT: string
 
-    @Property()
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     tgGV: string
 
-    @Property()
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     tgK: string

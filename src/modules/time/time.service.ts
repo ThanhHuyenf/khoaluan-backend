@@ -19,8 +19,8 @@ export class TimeService {
     public async get(): Promise<TimeEntity[]> {
         return this.timeRepository.findAll()
     }
-    public async update(time: TimeDto): Promise<TimeEntity> {
-        const existing = await this.timeRepository.findOne({id: time.id})
+    public async update(id: number, time: TimeDto): Promise<TimeEntity> {
+        const existing = await this.timeRepository.findOne({id: id})
         wrap(existing).assign(time);
         await this.timeRepository.flush()
         return this.timeRepository.findOne({id: time.id})
