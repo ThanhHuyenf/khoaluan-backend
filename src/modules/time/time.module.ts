@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { TimeService } from './time.service';
-import { TimeController } from './time.controller';
-import {MikroOrmModule} from "@mikro-orm/nestjs";
-import {TimeEntity} from "./time.entity";
+import { Module } from '@nestjs/common'
+import { TimeService } from './time.service'
+import { TimeController } from './time.controller'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { Time } from './time.entity'
 
 @Module({
-  imports: [MikroOrmModule.forFeature({ entities: [TimeEntity] })],
+  imports: [TypeOrmModule.forFeature([Time])],
   providers: [TimeService],
-  controllers: [TimeController]
+  controllers: [TimeController],
 })
 export class TimeModule {}
