@@ -22,20 +22,4 @@ export class Time {
 
   @Column()
   tgK: string
-
-  constructor(
-    namHoc: string,
-    maHK: number,
-    tgSV: string,
-    tgLT: string,
-    tgGV: string,
-    tgK: string,
-  ) {
-    this.namHoc = namHoc
-    this.maHK = maHK
-    this.tgSV = tgSV
-    this.tgLT = tgLT
-    this.tgGV = tgGV
-    this.tgK = tgK
-  }
 }

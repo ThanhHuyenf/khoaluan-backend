@@ -13,15 +13,11 @@ export class TimeService {
   ) {}
 
   public async create(time: CreateTimeDto): Promise<Time> {
-    const timeEntity = new Time(
-      time.namHoc,
-      time.maHK,
-      time.tgSV,
-      time.tgLT,
-      time.tgGV,
-      time.tgK,
-    )
-    return this.timeRepository.create(timeEntity)
+    return this.timeRepository.save(time)
+  }
+
+  public async findById(id: number): Promise<Time> {
+    return this.timeRepository.findOne(id)
   }
   public async get(): Promise<Time[]> {
     return this.timeRepository.find()
