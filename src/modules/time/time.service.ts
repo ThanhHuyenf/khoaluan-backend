@@ -1,28 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import {InjectRepository} from "@mikro-orm/nestjs";
-import {TimeEntity} from "./time.entity";
-import {EntityRepository, wrap} from "@mikro-orm/core";
-import {CreateTimeDto} from "./dto/create-time.dto";
-import {TimeDto} from "./dto/time.dto";
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { CreateTimeDto } from './dto/create-time.dto'
+import { TimeDto } from './dto/time.dto'
+import { Time } from './time.entity'
 
 @Injectable()
 export class TimeService {
-    constructor(
-        @InjectRepository(TimeEntity)
-        private readonly timeRepository: EntityRepository<TimeEntity>
-    ) {
+  constructor(
+    @InjectRepository(Time)
+    private timeRepository: Repository<Time>,
+  ) {}
+
+  public async create(time: CreateTimeDto): Promise<Time> {
+    const timeEntity = new Time(
+      time.namHoc,
+      time.maHK,
+      time.tgSV,
+      time.tgLT,
+      time.tgGV,
+      time.tgK,
+    )
+    return this.timeRepository.create(timeEntity)
+  }
+  public async get(): Promise<Time[]> {
+    return this.timeRepository.find()
+  }
+  public async update(id: number, time: TimeDto): Promise<Time> {
+    const existing = await this.timeRepository.findOne({ id: id })
+    const timeUpdate: Time = {
+      ...time,
     }
-    public async create(time: CreateTimeDto): Promise<TimeEntity> {
-        const timeEntity = new TimeEntity(time.namHoc,time.maHK,time.tgSV,time.tgLT,time.tgGV,time.tgK)
-        return this.timeRepository.create(timeEntity)
+    if (!existing) {
+      throw new NotFoundException('NOT FOUND ID')
     }
-    public async get(): Promise<TimeEntity[]> {
-        return this.timeRepository.findAll()
-    }
-    public async update(id: number, time: TimeDto): Promise<TimeEntity> {
-        const existing = await this.timeRepository.findOne({id: id})
-        wrap(existing).assign(time);
-        await this.timeRepository.flush()
-        return this.timeRepository.findOne({id: time.id})
-    }
+    return this.timeRepository.save({
+      ...existing, // existing fields
+      ...timeUpdate, // updated fields
+    })
+  }
 }

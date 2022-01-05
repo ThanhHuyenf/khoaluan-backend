@@ -1,44 +1,41 @@
-import {Entity, EntityRepositoryType, PrimaryKey, Property} from "@mikro-orm/core";
-import {TimeRepository} from "./time.repository";
-
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class TimeEntity {
-    [EntityRepositoryType]?: TimeRepository;
+export class Time {
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @PrimaryKey()
-    id: number
+  @Column()
+  namHoc: string
 
-    @Property()
-    namHoc: string
+  @Column()
+  maHK: number
 
-    @Property()
-    maHK: number
+  @Column()
+  tgSV: string
 
-    @Property()
-    tgSV: string
+  @Column()
+  tgLT: string
 
-    @Property()
-    tgLT: string
+  @Column()
+  tgGV: string
 
-    @Property()
-    tgGV: string
+  @Column()
+  tgK: string
 
-    @Property()
-    tgK: string
-
-    @Property()
-    created_at= new Date()
-
-    @Property({ onUpdate: () => new Date() })
-    updatedAt = new Date();
-
-    constructor(namHoc: string,maHK: number, tgSV: string, tgLT: string,tgGV: string, tgK: string) {
-        this.namHoc = namHoc
-        this.maHK = maHK
-        this.tgSV = tgSV
-        this.tgLT = tgLT
-        this.tgGV = tgGV
-        this.tgK = tgK
-    }
+  constructor(
+    namHoc: string,
+    maHK: number,
+    tgSV: string,
+    tgLT: string,
+    tgGV: string,
+    tgK: string,
+  ) {
+    this.namHoc = namHoc
+    this.maHK = maHK
+    this.tgSV = tgSV
+    this.tgLT = tgLT
+    this.tgGV = tgGV
+    this.tgK = tgK
+  }
 }
