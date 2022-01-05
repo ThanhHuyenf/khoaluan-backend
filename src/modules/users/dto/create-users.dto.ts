@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
-export class CreateTimeDto {
+export class CreateUsersDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()

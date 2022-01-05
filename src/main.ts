@@ -7,6 +7,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   setUpSwagger(app)
+  app.setGlobalPrefix('/api/')
   await app.listen(PORT)
 }
 
