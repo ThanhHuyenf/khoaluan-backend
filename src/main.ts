@@ -21,7 +21,7 @@ function setUpSwagger(app: INestApplication) {
 
   const document = SwaggerModule.createDocument(app, options)
 
-  SwaggerModule.setup('docs', app, document, {
+  SwaggerModule.setup('/api/docs', app, document, {
     swaggerOptions: {
       displayOperationId: true,
     },
