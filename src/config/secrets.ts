@@ -14,3 +14,6 @@ export const MYSQL_PORT = process.env.MYSQL_PORT
 export const MYSQL_ROOT_USER = process.env.MYSQL_ROOT_USER
 export const MYSQL_ROOT_PASSWORD = process.env.MYSQL_ROOT_PASSWORD
 export const MYSQL_DATABASE = process.env.MYSQL_DATABASE
+
+export const JWT_SECRET = process.env.JWT_SECRET
+export const JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME

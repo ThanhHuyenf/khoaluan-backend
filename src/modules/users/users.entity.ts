@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  CreateDateColumn,
+} from 'typeorm'
 import { Role } from './users.enum'
 
 @Entity()
@@ -18,12 +24,19 @@ export class Users {
   @Column({ type: 'enum', enum: Role })
   role: Role
 
-  @Column()
+  @Column({ nullable: true })
   imageUrls: string
 
-  @Column()
-  createdAt: string
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  createdAt: Date
 
-  @Column()
-  updatedAt: string
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updatedAt: Date
 }

@@ -11,6 +11,7 @@ import {
   MYSQL_ROOT_PASSWORD,
   MYSQL_ROOT_USER,
 } from './config/secrets'
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import {
     }),
     UsersModule,
     TimeModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

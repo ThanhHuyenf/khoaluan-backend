@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { CreateUsersDto } from './dto/create-users.dto'
@@ -18,5 +18,27 @@ export class UsersService {
       role: Role.Student,
     }
     return this.usersRepository.save(users)
+  }
+
+  public async getById(id: number) {
+    const user = await this.usersRepository.findOne(id)
+    if (user) {
+      return user
+    }
+    throw new HttpException(
+      'User with this email does not exist',
+      HttpStatus.NOT_FOUND,
+    )
+  }
+
+  public async getRole(id: string) {
+    const user = await this.usersRepository.findOne(id)
+    if (user) {
+      return user.role
+    }
+    throw new HttpException(
+      'User with this email does not exist',
+      HttpStatus.NOT_FOUND,
+    )
   }
 }
