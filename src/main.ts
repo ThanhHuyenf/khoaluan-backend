@@ -15,7 +15,7 @@ function setUpSwagger(app: INestApplication) {
   const options = new DocumentBuilder()
     .setTitle('Point Training System')
     .setDescription(`API specification for Thanh Huyen Point Training System.`)
-    .setVersion('0.1.1')
+    .setVersion('0.1.2')
     .addBearerAuth()
     .build()
 
