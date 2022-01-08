@@ -12,6 +12,7 @@ import {
   MYSQL_ROOT_USER,
 } from './config/secrets'
 import { AuthModule } from './modules/auth/auth.module'
+import { DetailUsersModule } from './modules/detail-users/detail-users.module'
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AuthModule } from './modules/auth/auth.module'
     UsersModule,
     TimeModule,
     AuthModule,
+    DetailUsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -63,7 +63,10 @@ export class UsersService {
         ...user2, // updated fields
       })
     } catch (error) {
-      throw new HttpException(error, HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Wrong password credentails',
+        HttpStatus.BAD_REQUEST,
+      )
     }
   }
 
