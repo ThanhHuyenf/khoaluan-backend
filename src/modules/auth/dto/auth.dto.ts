@@ -5,7 +5,7 @@ export class AuthDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  id: number
+  id: string
 
   @ApiProperty()
   @IsNotEmpty()

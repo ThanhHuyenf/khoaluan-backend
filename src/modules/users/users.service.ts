@@ -32,6 +32,17 @@ export class UsersService {
       return user
     }
     throw new HttpException(
+      'User with this id does not exist',
+      HttpStatus.NOT_FOUND,
+    )
+  }
+
+  public async getByEmail(email: string) {
+    const user = await this.usersRepository.findOne({ email: email })
+    if (user) {
+      return user
+    }
+    throw new HttpException(
       'User with this email does not exist',
       HttpStatus.NOT_FOUND,
     )

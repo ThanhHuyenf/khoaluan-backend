@@ -39,6 +39,21 @@ export class AuthService {
       )
     }
   }
+
+  public async loginEm(email: string, plainTextPassword: string) {
+    try {
+      const user = await this.usersService.getByEmail(email)
+      await this.verifyPassword(plainTextPassword, user.password)
+      user.password = undefined
+      return user
+    } catch (error) {
+      throw new HttpException(
+        'Wrong credentials provided',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+  }
+
   private async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
