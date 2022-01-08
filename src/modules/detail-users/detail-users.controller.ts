@@ -6,6 +6,7 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger'
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard'
+import { MailService } from '../mail/mail.service'
 import { CreateUsersDto } from '../users/dto/create-users.dto'
 import { DetailUsersService } from './detail-users.service'
 
@@ -13,7 +14,10 @@ import { DetailUsersService } from './detail-users.service'
 @ApiTags('detail-users')
 @Controller('detail-users')
 export class DetailUsersController {
-  constructor(private readonly detailUsersService: DetailUsersService) {}
+  constructor(
+    private readonly detailUsersService: DetailUsersService,
+    private mailService: MailService,
+  ) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
@@ -21,5 +25,14 @@ export class DetailUsersController {
   @ApiResponse({ status: 201, description: 'Success', type: CreateUsersDto })
   async create(@Req() req) {
     return await this.detailUsersService.findById(req.user.id)
+  }
+
+  @Get('/mail')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get users info' })
+  async testMail(@Req() req) {
+    const data = await this.detailUsersService.findById(req.user.id)
+    await this.mailService.sendUserConfirmation(data, 'huyenxinhgai')
+    return 'Send mail successfull'
   }
 }

@@ -17,3 +17,6 @@ export const MYSQL_DATABASE = process.env.MYSQL_DATABASE
 
 export const JWT_SECRET = process.env.JWT_SECRET
 export const JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME
+
+export const EMAIL_NAME = process.env.EMAIL_NAME
+export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD

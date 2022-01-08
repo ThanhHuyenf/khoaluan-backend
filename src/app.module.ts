@@ -13,6 +13,7 @@ import {
 } from './config/secrets'
 import { AuthModule } from './modules/auth/auth.module'
 import { DetailUsersModule } from './modules/detail-users/detail-users.module'
+import { MailModule } from './modules/mail/mail.module'
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { DetailUsersModule } from './modules/detail-users/detail-users.module'
     TimeModule,
     AuthModule,
     DetailUsersModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
