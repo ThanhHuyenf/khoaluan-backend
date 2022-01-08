@@ -1,4 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { Users } from '../users/users.entity'
+import { DetailUsers } from './detail-users.entity'
 
 @Injectable()
-export class DetailUsersService {}
+export class DetailUsersService {
+  constructor(
+    @InjectRepository(DetailUsers)
+    private detailUsersRepository: Repository<DetailUsers>,
+  ) {}
+
+  public async findById(id: number): Promise<DetailUsers> {
+    return this.detailUsersRepository
+      .createQueryBuilder('detail_users')
+      .leftJoinAndSelect('detail_users.users', 'userId')
+      .where('detail_users.usersUserID = :id', { id: id })
+      .getOne()
+  }
+}

@@ -4,12 +4,25 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm'
+import { Users } from '../users/users.entity'
 
 @Entity()
 export class DetailUsers {
   @PrimaryGeneratedColumn()
   id: number
+
+  @Column()
+  birthDate: Date
+
+  @Column()
+  name: string
+
+  @OneToOne(() => Users)
+  @JoinColumn()
+  users: Users
 
   @CreateDateColumn({
     type: 'timestamp',

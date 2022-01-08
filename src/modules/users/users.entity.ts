@@ -13,9 +13,6 @@ export class Users {
   userID: number
 
   @Column()
-  name: string
-
-  @Column()
   password: string
 
   @Column({ unique: true })
