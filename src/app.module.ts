@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module'
 import { DetailUsersModule } from './modules/detail-users/detail-users.module'
 import { MailModule } from './modules/mail/mail.module'
 import { CommonModule } from './modules/common/common.module'
+import { AdminModule } from './modules/admin/admin.module'
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CommonModule } from './modules/common/common.module'
     DetailUsersModule,
     MailModule,
     CommonModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
