@@ -6,13 +6,12 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { MoreThan, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import { CreateUsersDto } from './dto/create-users.dto'
 import { Users } from './entity/users.entity'
 import { Role, Status } from './users.enum'
 import { ResetPassword } from './entity/reset-password.entity'
-import { format } from 'date-fns'
 import * as uuid from 'uuid'
 import { MailService } from '../mail/mail.service'
 import { DetailUsersService } from '../detail-users/detail-users.service'
@@ -56,6 +55,11 @@ export class UsersService {
       'User with this email does not exist',
       HttpStatus.NOT_FOUND,
     )
+  }
+
+  public async getListByRole(role: Role) {
+    const users = await this.usersRepository.find({ role: role })
+    return users
   }
 
   public async getRole(id: string) {
@@ -109,13 +113,8 @@ export class UsersService {
 
   public async createResetPassword(email: string) {
     const data = await this.getByEmail(email)
-    const MoreThanDate = (date: Date) =>
-      MoreThan(format(date, 'yyyy-MM-dd HH:MM:SS'))
-    const findInfo = await this.resetPasswordRepository.find({
-      email: email,
-      status: Status.Starting,
-      expiredAt: MoreThanDate(new Date()),
-    })
+    // const MoreThanDate = (date: Date) =>
+    //   MoreThan(format(date, 'yyyy-MM-dd HH:MM:SS'))
     await this.resetPasswordRepository
       .createQueryBuilder()
       .delete()
