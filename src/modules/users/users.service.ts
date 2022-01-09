@@ -140,7 +140,7 @@ export class UsersService {
       token: token,
     })
     if (!findToken) {
-      throw new BadRequestException('Cannot found your token')
+      throw new NotFoundException('Cannot found your token')
     }
     if (findToken.status === Status.Changed) {
       throw new BadRequestException('Your password has changed')
@@ -150,7 +150,7 @@ export class UsersService {
     }
     const data = await this.usersRepository.findOne(findToken.userID)
     if (!data) {
-      throw new BadRequestException('User not found')
+      throw new NotFoundException('User not found')
     }
     const dataNew = data
     dataNew.password = await bcrypt.hash(newPassword, 10)
