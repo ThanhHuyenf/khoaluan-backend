@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { IsEnum } from 'class-validator'
 import { Role } from 'src/modules/users/users.enum'
 
 export class getUserByRoleDto {
