@@ -4,25 +4,25 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm'
-import { Users } from '../users/users.entity'
+import { Role } from '../users.enum'
 
 @Entity()
-export class DetailUsers {
+export class Users {
   @PrimaryGeneratedColumn()
-  id: number
+  userID: number
 
   @Column()
-  birthDate: Date
+  password: string
 
-  @Column()
-  name: string
+  @Column({ unique: true })
+  email: string
 
-  @OneToOne(() => Users)
-  @JoinColumn()
-  users: Users
+  @Column({ type: 'enum', enum: Role })
+  role: Role
+
+  @Column({ nullable: true })
+  imageUrls: string
 
   @CreateDateColumn({
     type: 'timestamp',

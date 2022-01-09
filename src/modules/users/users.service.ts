@@ -1,21 +1,33 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { MoreThan, Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import { CreateUsersDto } from './dto/create-users.dto'
-import { Users } from './users.entity'
-import { Role } from './users.enum'
+import { Users } from './entity/users.entity'
+import { Role, Status } from './users.enum'
+import TokenGenerator from 'uuid-token-generator'
+import { ResetPassword } from './entity/reset-password.entity'
+import { format } from 'date-fns'
+import * as uuid from 'uuid'
+import { MailService } from '../mail/mail.service'
+import { DetailUsersService } from '../detail-users/detail-users.service'
+import { find } from 'rxjs'
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(Users)
     private usersRepository: Repository<Users>,
+    @InjectRepository(ResetPassword)
+    private resetPasswordRepository: Repository<ResetPassword>,
+    private mailService: MailService,
+    private detailUsersService: DetailUsersService,
   ) {}
 
   public async createUser(dto: CreateUsersDto): Promise<Users> {
@@ -95,5 +107,60 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       )
     }
+  }
+
+  public async createResetPassword(email: string) {
+    const data = await this.getByEmail(email)
+    const MoreThanDate = (date: Date) =>
+      MoreThan(format(date, 'yyyy-MM-dd HH:MM:SS'))
+    const findInfo = await this.resetPasswordRepository.find({
+      email: email,
+      status: Status.Starting,
+      expiredAt: MoreThanDate(new Date()),
+    })
+    if (findInfo.length > 0) {
+      throw new HttpException(
+        'You have a request reset password before.Please reset password or wait your older request expired',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+    const token: string = uuid.v4()
+    const expiredDate = new Date(new Date().setHours(new Date().getHours() + 2))
+    const createChangePassword = {
+      token: token,
+      expiredAt: expiredDate,
+      userID: data.userID,
+      email: data.email,
+      status: Status.Starting,
+    }
+    const dataDetailUsers = await this.detailUsersService.findById(data.userID)
+    await this.mailService.sendResetPassword(dataDetailUsers, token)
+    return this.resetPasswordRepository.save(createChangePassword)
+  }
+
+  public async resetPassword(newPassword: string, token: string) {
+    const findToken = await this.resetPasswordRepository.findOne({
+      token: token,
+    })
+    if (!findToken) {
+      throw new BadRequestException('Cannot found your token')
+    }
+    if (findToken.status === Status.Changed) {
+      throw new BadRequestException('Your password has changed')
+    }
+    if (findToken.expiredAt < new Date()) {
+      throw new BadRequestException('Your token expired')
+    }
+    const data = await this.usersRepository.findOne(findToken.userID)
+    if (!data) {
+      throw new BadRequestException('User not found')
+    }
+    const dataNew = data
+    dataNew.password = await bcrypt.hash(newPassword, 10)
+    await this.resetPasswordRepository.delete({ id: findToken.id })
+    return this.usersRepository.save({
+      ...data,
+      ...dataNew,
+    })
   }
 }

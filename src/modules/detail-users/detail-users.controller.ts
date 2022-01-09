@@ -26,13 +26,4 @@ export class DetailUsersController {
   async create(@Req() req) {
     return await this.detailUsersService.findById(req.user.id)
   }
-
-  @Get('/mail')
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Get users info' })
-  async testMail(@Req() req) {
-    const data = await this.detailUsersService.findById(req.user.id)
-    await this.mailService.sendUserConfirmation(data, 'huyenxinhgai')
-    return 'Send mail successfull'
-  }
 }

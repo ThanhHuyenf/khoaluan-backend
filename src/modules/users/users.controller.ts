@@ -45,6 +45,7 @@ export class UsersController {
   }
 
   @Get('/checkuid')
+  @ApiExcludeEndpoint()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Đổi pass tài khoản' })
   async checkUID(@Req() req) {

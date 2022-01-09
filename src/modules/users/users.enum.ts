@@ -5,3 +5,8 @@ export enum Role {
   Department = 'Department',
   Admin = 'Admin',
 }
+
+export enum Status {
+  Starting = 'Starting',
+  Changed = 'Changed',
+}

@@ -26,6 +26,7 @@ export class AuthService {
       throw new HttpException(error, HttpStatus.BAD_REQUEST)
     }
   }
+
   public async login(id: number, plainTextPassword: string) {
     try {
       const user = await this.usersService.getById(id)

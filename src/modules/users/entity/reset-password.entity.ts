@@ -5,24 +5,27 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
 } from 'typeorm'
-import { Role } from './users.enum'
+import { Status } from '../users.enum'
 
 @Entity()
-export class Users {
+export class ResetPassword {
   @PrimaryGeneratedColumn()
+  id: number
+
+  @Column()
+  email: string
+
+  @Column()
   userID: number
 
   @Column()
-  password: string
+  token: string
 
-  @Column({ unique: true })
-  email: string
+  @Column({ type: 'enum', enum: Status })
+  status: string
 
-  @Column({ type: 'enum', enum: Role })
-  role: Role
-
-  @Column({ nullable: true })
-  imageUrls: string
+  @Column()
+  expiredAt: Date
 
   @CreateDateColumn({
     type: 'timestamp',
