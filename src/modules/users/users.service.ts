@@ -11,13 +11,11 @@ import * as bcrypt from 'bcrypt'
 import { CreateUsersDto } from './dto/create-users.dto'
 import { Users } from './entity/users.entity'
 import { Role, Status } from './users.enum'
-import TokenGenerator from 'uuid-token-generator'
 import { ResetPassword } from './entity/reset-password.entity'
 import { format } from 'date-fns'
 import * as uuid from 'uuid'
 import { MailService } from '../mail/mail.service'
 import { DetailUsersService } from '../detail-users/detail-users.service'
-import { find } from 'rxjs'
 
 @Injectable()
 export class UsersService {
@@ -118,12 +116,11 @@ export class UsersService {
       status: Status.Starting,
       expiredAt: MoreThanDate(new Date()),
     })
-    if (findInfo.length > 0) {
-      throw new HttpException(
-        'You have a request reset password before.Please reset password or wait your older request expired',
-        HttpStatus.BAD_REQUEST,
-      )
-    }
+    await this.resetPasswordRepository
+      .createQueryBuilder()
+      .delete()
+      .where('email = :email', { email: email })
+      .execute()
     const token: string = uuid.v4()
     const expiredDate = new Date(new Date().setHours(new Date().getHours() + 2))
     const createChangePassword = {
