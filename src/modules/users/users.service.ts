@@ -113,6 +113,9 @@ export class UsersService {
 
   public async createResetPassword(email: string) {
     const data = await this.getByEmail(email)
+    if (!data) {
+      throw new NotFoundException('NOT_FOUND_EMAIL')
+    }
     // const MoreThanDate = (date: Date) =>
     //   MoreThan(format(date, 'yyyy-MM-dd HH:MM:SS'))
     await this.resetPasswordRepository
