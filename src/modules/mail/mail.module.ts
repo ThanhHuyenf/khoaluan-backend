@@ -20,7 +20,7 @@ import { EMAIL_NAME, EMAIL_PASSWORD } from 'src/config/secrets'
         },
       },
       defaults: {
-        from: '"Liềng Răng Mất Não" <lth.liengrangmatnao@gmail.com>',
+        from: '"Quản Lý Điểm Rèn Luyện" <lth.khoaluan@gmail.com>',
       },
       template: {
         dir: join(__dirname, 'templates'),
