@@ -1,16 +1,22 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { PORT } from './config/secrets'
-import { INestApplication } from '@nestjs/common'
+import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { HttpExceptionFilter } from './filters'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.setGlobalPrefix('/api/')
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }),
+  )
+  app.useGlobalFilters(new HttpExceptionFilter())
   setUpSwagger(app)
   app.enableCors()
-  app.useGlobalFilters(new HttpExceptionFilter())
   await app.listen(PORT)
 }
 

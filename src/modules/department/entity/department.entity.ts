@@ -6,7 +6,8 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
+  RelationId,
 } from 'typeorm'
 
 @Entity()
@@ -20,9 +21,12 @@ export class Department {
   @Column({ type: 'nvarchar', length: '50' })
   information: string
 
-  @OneToOne(() => Users)
+  @ManyToOne(() => Users, (users) => users.departments)
   @JoinColumn()
   departmentAdmin: Users
+
+  @RelationId((depart: Department) => depart.departmentAdmin)
+  departmentAdminUserID: number
 
   @CreateDateColumn({
     type: 'timestamp',

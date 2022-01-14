@@ -1,9 +1,11 @@
+import { Department } from 'src/modules/department/entity/department.entity'
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm'
 import { Role } from '../users.enum'
 
@@ -23,6 +25,9 @@ export class Users {
 
   @Column({ nullable: true })
   imageUrls: string
+
+  @OneToMany(() => Department, (project) => project.departmentAdmin)
+  departments: Department[]
 
   @CreateDateColumn({
     type: 'timestamp',
