@@ -29,7 +29,6 @@ import { DepartmentModule } from './modules/department/department.module'
       database: MYSQL_DATABASE,
       entities: ['dist/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      synchronize: true,
     }),
     UsersModule,
     TimeModule,

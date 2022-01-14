@@ -14,10 +14,10 @@ export class Department {
   @PrimaryGeneratedColumn()
   departmentId: number
 
-  @Column()
+  @Column({ type: 'nvarchar', length: '50' })
   departmentName: string
 
-  @Column()
+  @Column({ type: 'nvarchar', length: '50' })
   information: string
 
   @OneToOne(() => Users)
