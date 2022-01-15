@@ -13,7 +13,7 @@ export class DetailUsersService {
   public async findById(id: number): Promise<DetailUsers> {
     return this.detailUsersRepository
       .createQueryBuilder('detail_users')
-      .leftJoinAndSelect('detail_users.users', 'userId')
+      .leftJoinAndSelect('detail_users.users', 'userID')
       .where('detail_users.usersUserID = :id', { id: id })
       .getOne()
   }

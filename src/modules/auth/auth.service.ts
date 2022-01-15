@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { DetailUsersService } from '../detail-users/detail-users.service'
+import { TeachersService } from '../teachers/teachers.service'
 import { CreateUsersDto } from '../users/dto/create-users.dto'
 import { Role } from '../users/users.enum'
 import { UsersService } from '../users/users.service'
@@ -12,6 +13,7 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly detailUsersService: DetailUsersService,
+    private readonly teachersService: TeachersService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -73,9 +75,13 @@ export class AuthService {
     }
   }
   public async getName(id: number, role: Role) {
-    if (role === Role.Student) {
+    if (role === Role.Student || role === Role.Monitor) {
       const data = await this.detailUsersService.findById(id)
       return data.name
+    }
+    if (role === Role.Teacher) {
+      const data = await this.teachersService.findById(id)
+      return data.teacherName
     } else {
       return role
     }

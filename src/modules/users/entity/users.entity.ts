@@ -1,5 +1,4 @@
 import { Department } from 'src/modules/department/entity/department.entity'
-import { Teachers } from 'src/modules/teachers/entity/teachers.entity'
 import {
   Entity,
   Column,
@@ -29,9 +28,6 @@ export class Users {
 
   @OneToMany(() => Department, (project) => project.departmentAdmin)
   departments: Department[]
-
-  @OneToMany(() => Teachers, (project) => project.teacherUser)
-  teachers: Teachers[]
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -8,11 +8,13 @@ import { JWT_EXPIRATION_TIME, JWT_SECRET } from 'src/config/secrets'
 import { JwtStrategy } from './strategy/jwt.strategy'
 import { LocalStrategy } from './strategy/local.strategy'
 import { DetailUsersModule } from '../detail-users/detail-users.module'
+import { TeachersModule } from '../teachers/teachers.module'
 
 @Module({
   imports: [
     UsersModule,
     DetailUsersModule,
+    TeachersModule,
     PassportModule,
     JwtModule.register({
       secret: JWT_SECRET,

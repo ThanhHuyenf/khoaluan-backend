@@ -9,6 +9,7 @@ import {
   JoinColumn,
   ManyToOne,
   RelationId,
+  OneToOne,
 } from 'typeorm'
 
 @Entity()
@@ -29,12 +30,9 @@ export class Teachers {
   @RelationId((cla: Teachers) => cla.teacherDepartment)
   teacherDepartmentDepartmentId: number
 
-  @ManyToOne(() => Users, (department) => department.teachers)
+  @OneToOne(() => Users)
   @JoinColumn()
-  teacherUser: Users
-
-  @RelationId((cla: Teachers) => cla.teacherUser)
-  teacherUserUserID: number
+  teacherUsers: Users
 
   @CreateDateColumn({
     type: 'timestamp',
