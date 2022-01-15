@@ -7,10 +7,12 @@ import { JwtModule } from '@nestjs/jwt'
 import { JWT_EXPIRATION_TIME, JWT_SECRET } from 'src/config/secrets'
 import { JwtStrategy } from './strategy/jwt.strategy'
 import { LocalStrategy } from './strategy/local.strategy'
+import { DetailUsersModule } from '../detail-users/detail-users.module'
 
 @Module({
   imports: [
     UsersModule,
+    DetailUsersModule,
     PassportModule,
     JwtModule.register({
       secret: JWT_SECRET,

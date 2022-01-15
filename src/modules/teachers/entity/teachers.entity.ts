@@ -1,4 +1,3 @@
-import { Course } from 'src/modules/course/entity/course.entity'
 import { Department } from 'src/modules/department/entity/department.entity'
 import { Users } from 'src/modules/users/entity/users.entity'
 import {

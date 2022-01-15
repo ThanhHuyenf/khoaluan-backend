@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
+import { DetailUsersService } from '../detail-users/detail-users.service'
 import { CreateUsersDto } from '../users/dto/create-users.dto'
 import { Role } from '../users/users.enum'
 import { UsersService } from '../users/users.service'
@@ -10,6 +11,7 @@ import { TokenPayload } from './entity/tokenpayload.entity'
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
+    private readonly detailUsersService: DetailUsersService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -70,8 +72,16 @@ export class AuthService {
       )
     }
   }
-  public getJWTToken(id: number, role: Role) {
-    const payload: TokenPayload = { id, role }
+  public async getName(id: number, role: Role) {
+    if (role === Role.Student) {
+      const data = await this.detailUsersService.findById(id)
+      return data.name
+    } else {
+      return role
+    }
+  }
+  public getJWTToken(id: number, role: Role, name: string) {
+    const payload: TokenPayload = { id, role, name }
     return this.jwtService.sign(payload)
   }
 }
