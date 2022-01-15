@@ -1,9 +1,11 @@
+import { Class } from 'src/modules/class/entity/class.entity'
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm'
 
 @Entity()
@@ -19,6 +21,9 @@ export class Course {
 
   @Column()
   courseEndTime: number
+
+  @OneToMany(() => Class, (project) => project.classDepartment)
+  classes: Class[]
 
   @CreateDateColumn({
     type: 'timestamp',

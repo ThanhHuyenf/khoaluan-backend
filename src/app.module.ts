@@ -18,6 +18,8 @@ import { CommonModule } from './modules/common/common.module'
 import { AdminModule } from './modules/admin/admin.module'
 import { DepartmentModule } from './modules/department/department.module'
 import { CourseModule } from './modules/course/course.module'
+import { ClassModule } from './modules/class/class.module'
+import { TeachersModule } from './modules/teachers/teachers.module'
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { CourseModule } from './modules/course/course.module'
     AdminModule,
     DepartmentModule,
     CourseModule,
+    ClassModule,
+    TeachersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

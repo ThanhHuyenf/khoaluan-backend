@@ -1,3 +1,5 @@
+import { Class } from 'src/modules/class/entity/class.entity'
+import { Teachers } from 'src/modules/teachers/entity/teachers.entity'
 import { Users } from 'src/modules/users/entity/users.entity'
 import {
   Entity,
@@ -8,6 +10,7 @@ import {
   JoinColumn,
   ManyToOne,
   RelationId,
+  OneToMany,
 } from 'typeorm'
 
 @Entity()
@@ -27,6 +30,12 @@ export class Department {
 
   @RelationId((depart: Department) => depart.departmentAdmin)
   departmentAdminUserID: number
+
+  @OneToMany(() => Class, (project) => project.classDepartment)
+  classes: Class[]
+
+  @OneToMany(() => Teachers, (project) => project.teacherDepartment)
+  teachers: Teachers[]
 
   @CreateDateColumn({
     type: 'timestamp',
