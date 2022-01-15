@@ -17,6 +17,7 @@ import { MailModule } from './modules/mail/mail.module'
 import { CommonModule } from './modules/common/common.module'
 import { AdminModule } from './modules/admin/admin.module'
 import { DepartmentModule } from './modules/department/department.module'
+import { CourseModule } from './modules/course/course.module'
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { DepartmentModule } from './modules/department/department.module'
     CommonModule,
     AdminModule,
     DepartmentModule,
+    CourseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
